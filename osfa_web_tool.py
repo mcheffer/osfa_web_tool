@@ -119,7 +119,6 @@ def validate_link(link, url):
 		attribute = bool([True for e in ATTRIBUTES if e in clean_link])
 		anchor = '#' in clean_link and url in clean_link
 		if not attribute and not anchor and clean_link not in CHECKED:
-			print("\nChecking: " + clean_link + "\n")
 			response = get_response(clean_link)
 	
 	if response:
@@ -201,8 +200,13 @@ def get_response(clean_link):
 		BAD_URLS[clean_link] = "No Response"
 		return clean_link, "No Response"
 
-	if DOMAIN in clean_link:
+	if DOMAIN in clean_link and clean_link not in CHECKED:
 		STACK.append(clean_link)
+
+		# uncomment to get list of osfa urls
+		# output = open("fa urls.txt",'a')
+		# output.write(clean_link + "\n")
+		# output.close()
 	
 	# the link returned a 200 response code
 	return None
