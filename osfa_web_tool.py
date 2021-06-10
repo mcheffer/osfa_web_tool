@@ -1,6 +1,6 @@
-
+import requests, os, re
 from bs4 import BeautifulSoup
-import requests, os
+from nltk.tokenize import sent_tokenize
 from tqdm import tqdm
 
 DOMAIN = "https://financialaid.arizona.edu"
@@ -96,9 +96,9 @@ def check(url, section="main"):
 		write_output(links, url)
 
 	# TODO: insert a string inot a regex statement
-	word = None
+	word = "UA"
 
-	if word:
+	if word and soup:
 		find_word(url, soup, word)
 
 	CHECKED.append(url)
@@ -202,11 +202,9 @@ def get_response(clean_link):
 
 	if DOMAIN in clean_link and clean_link not in CHECKED:
 		STACK.append(clean_link)
-
-		# uncomment to get list of osfa urls
-		# output = open("fa urls.txt",'a')
-		# output.write(clean_link + "\n")
-		# output.close()
+		output = open("fa urls.txt",'a')
+		output.write(clean_link + "\n")
+		output.close()
 	
 	# the link returned a 200 response code
 	return None
@@ -240,7 +238,7 @@ def write_output(links, url):
 
 def find_word(url, soup, word):
 	count = 0
-	text = sent_tokenize(page.get_text())
+	text = sent_tokenize(soup.get_text())
 	
 	for sentence in text:
 		if re.search(r'\bUA\b', sentence):
@@ -261,7 +259,7 @@ def find_word(url, soup, word):
 #==============================================================================
 
 def main():
-	#testing github
+
 	start_url_check()
 	print("Finished")
 
