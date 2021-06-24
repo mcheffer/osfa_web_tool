@@ -58,11 +58,7 @@ def remove_old_files():
 	except:
 		pass
 	try:
-		os.remove("url_response.txt")
-	except:
-		pass
-	try:
-		os.remove("url_response.txt")
+		os.remove("found_words.txt")
 	except:
 		pass
 
@@ -200,11 +196,11 @@ def get_response(clean_link):
 		BAD_URLS[clean_link] = "No Response"
 		return clean_link, "No Response"
 
-	if DOMAIN in clean_link and clean_link not in CHECKED:
-		STACK.append(clean_link)
-		output = open("fa urls.txt",'a')
-		output.write(clean_link + "\n")
-		output.close()
+	# if DOMAIN in clean_link and clean_link not in CHECKED:
+		# STACK.append(clean_link)
+		# output = open("fa urls.txt",'a')
+		# output.write(clean_link + "\n")
+		# output.close()
 	
 	# the link returned a 200 response code
 	return None
